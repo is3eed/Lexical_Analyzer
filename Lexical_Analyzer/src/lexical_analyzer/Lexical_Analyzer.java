@@ -14,7 +14,8 @@ public class Lexical_Analyzer {
         char word[];
         int i = 0, j = 0;
         char la;
-        boolean flag = false, unget = false; // true means we found a token so stop adding to char lex
+        boolean flag = false; 
+        boolean unget = false; // true means we found a token so stop adding to char lex
         // state 0 is begining, state 1,2 is id, state 3,4 integer (constant), state 
         char specifiers[] = {'n', 'a', 't', 'r', 'v', 'o', 'f', '?', '"', 'b', 39, 92};
 //        if (!input.exists()) {
@@ -64,6 +65,45 @@ public class Lexical_Analyzer {
                         } else if (la == '|') {
                             state = 36;
                             lex[i++] = la;
+                        } else if (Character.isAlphabetic(la) || la == '_') {
+                            state = 39;
+                            lex[i++] = la;
+                        } else if (Character.isDigit(la)) {
+                            state = 41;
+                            lex[i++] = la;
+                        }else if(la==';'){
+                        state=47;
+                        lex[i++]=la;
+                        }else if(la==','){
+                        state=48;
+                        lex[i++]=la;
+                        }else if(la=='['){
+                        state=49;
+                        lex[i++]=la;
+                        }else if(la==']'){
+                            state=50;
+                        lex[i++]=la;
+                        }else if(la=='{'){
+                            state=51;
+                        lex[i++]=la;
+                        }else if(la=='}'){
+                            state=52;
+                        lex[i++]=la;
+                        }else if(la=='('){
+                            state=53;
+                        lex[i++]=la;
+                        }else if(la==')'){
+                            state=54;
+                        lex[i++]=la;
+                        }else if(la=='.'){
+                            state=55;
+                        lex[i++]=la;
+                        }else if(la=='"'){
+                            state=56;
+                        lex[i++]=la;
+                        }else if(la=='\''){
+                            state=58;
+                        lex[i++]=la;
                         }
 
                         break;
@@ -291,49 +331,119 @@ public class Lexical_Analyzer {
                         }
                         break;
                     case 28:
-
+                        printLexeme(lex);
+                        System.out.println("assign_operator");
+                        state = 0;
+                        i = 0;
+                        unget = true;
                         break;
                     case 29:
-
+                        printLexeme(lex);
+                        System.out.println("Is_Equal_To");
+                        flag = true;
+                        state = 0;
+                        i = 0;
                         break;
                     case 30:
-
+                        if (la == '=') {
+                            state = 31;
+                            lex[i++] = la;
+                            lex[i] = '\0';
+                        } else {
+                            state = 32;
+                            lex[i] = '\0';
+                        }
                         break;
                     case 31:
-
+                        printLexeme(lex);
+                        System.out.println("Not_Equal_To");
+                        state = 0;
+                        i = 0;
+                        unget = true;
                         break;
                     case 32:
-
+                        printLexeme(lex);
+                        System.out.println("Logical_Not");
+                        state = 0;
+                        i = 0;
+                        unget = true;
                         break;
                     case 33:
-
+                        if (la == '&') {
+                            state = 34;
+                            lex[i++] = la;
+                            lex[i] = '\0';
+                        } else {
+                            state = 35;
+                            lex[i] = '\0';
+                        }
                         break;
                     case 34:
-
+                        printLexeme(lex);
+                        System.out.println("Logical_AND");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 35:
-
+                        printLexeme(lex);
+                        System.out.println("AND_operator");
+                        state = 0;
+                        i = 0;
+                        unget = true;
                         break;
                     case 36:
-
+                        if (la == '|') {
+                            state = 38;
+                            lex[i++] = la;
+                            lex[i] = '\0';
+                        } else {
+                            state = 37;
+                            lex[i] = '\0';
+                        }
                         break;
                     case 37:
-
+                        printLexeme(lex);
+                        System.out.println("OR_operator");
+                        state = 0;
+                        i = 0;
+                        unget = true;
                         break;
                     case 38:
-
+                        printLexeme(lex);
+                        System.out.println("Logical_OR");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 39:
-
+                        if (Character.isLetterOrDigit(la) || la == '_') {
+                            lex[i++] = la;
+                        } else {
+                            state = 40;
+                            lex[i] = '\0';
+                        }
                         break;
                     case 40:
-
+                        printLexeme(lex);
+                        System.out.println("ID");
+                        state = 0;
+                        i = 0;
+                        unget = true;
                         break;
                     case 41:
-
+                        if (Character.isDigit(la)) {
+                            lex[i++] = la;
+                        } else if (la == '.') {
+                            state = 42;
+                            lex[i++] = la;
+                        } else {
+                            state = 43;
+                            lex[i] = '\0';
+                        }
                         break;
                     case 42:
-
+                        
                         break;
                     case 43:
 
@@ -348,76 +458,214 @@ public class Lexical_Analyzer {
 
                         break;
                     case 47:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("simi_colon");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 48:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("comma");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 49:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("open_sequre_bracket");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 50:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("close_sequre_bracket");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 51:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("open_curly_bracket");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 52:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("close_curly_bracket");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 53:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("open_bracket");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 54:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("close_bracket");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 55:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("dot");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 56:
-
+                        if (la=='"'){
+                        state=57;
+                        lex[i++]=la;
+                        }else{
+                        state=56;
+                        break;
+                        }
                         break;
                     case 57:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("string");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 58:
+                        if(la=='\\'){
+                        state=61;
+                        lex[i++]=la;
+                        }else{
+                        state=59;
+                        }
 
                         break;
                     case 59:
-
+                        lex[i++]=la;
+                        state=60;
                         break;
                     case 60:
-
+                        if(la=='\''){
+                            lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("charecter");
+                        state = 0;
+                        i = 0;
+                        flag = true;
+                        }
                         break;
                     case 61:
-
+                        if(la=='\\'){
+                        lex[i++]=la;
+                        state=68;
+                        }else if(la=='t'){
+                        lex[i++]=la;
+                        state=64;
+                        }else if(la=='n'){
+                        lex[i++]=la;
+                        state=62;
+                        }else if(la=='0'){
+                        lex[i++]=la;
+                        state=66;
+                        }else if(la=='\''){
+                        lex[i++]=la;
+                        state=70;
+                        }
                         break;
                     case 62:
-
+                        if(la=='\''){
+                        state=63;
+                        lex[i++]=la;
+                        }
                         break;
                     case 63:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("new_line");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 64:
-
+                        if(la=='\''){
+                        state=63;
+                        lex[i++]=la;
+                        }
                         break;
                     case 65:
-
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("tab");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     case 66:
-
+                        if(la=='\''){
+                        state=63;
+                        lex[i++]=la;
+                        }
+                        break;
+                    case 67:
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("null");
+                        state = 0;
+                        i = 0;
+                        flag = true;
+                        break;
+                    case 68:
+                        if(la=='\''){
+                        state=63;
+                        lex[i++]=la;
+                        }
+                        break;
+                    case 69:
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("slash");
+                        state = 0;
+                        i = 0;
+                        flag = true;
+                        break;
+                    case 70:
+                        if(la=='\''){
+                        state=63;
+                        lex[i++]=la;
+                        }
+                        break;
+                    case 71:
+                        lex[i]='\0';
+                        printLexeme(lex);
+                        System.out.println("double_cotation");
+                        state = 0;
+                        i = 0;
+                        flag = true;
                         break;
                     default:
-
                         break;
                 }
                 if (j > word.length - 1 || flag || unget) {
                     flag = false;
                     unget = false;
-                    break;
-                }
-                
+                }else{
                 la = word[j++];
+                }
             }
             j = 0;
 
