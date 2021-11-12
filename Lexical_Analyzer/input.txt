@@ -747,35 +747,3 @@ public class Lexical_Analyzer {
             j = 0;
         }
     }
-
-    public static String isReserved(char[] lex) {
-        String java_reserved[] = {"boolean", "byte", "char", "double", "float", "short", "void", "int", "long", "while", "for", "do", "switch",
-            "break", "continue", "case", "default", "if", "else", "try", "catch", "finally", "class", "abstract", "extends", "final", "import", "private", "interface", "native",
-            "public", "package", "implements", "protected", "return", "static", "super", "synchronized", "this", "throw", "throws", "transient", "volatile"};
-        String temp = "";
-        for (int i = 0; i < lex.length; i++) {
-            if (lex[i] == '\0') {
-                break;
-            } else {
-                temp += lex[i];
-            }
-        }
-        for (int i = 0; i < java_reserved.length; i++) {
-            if (temp.equals(java_reserved[i])) {
-                return java_reserved[i];
-            }
-        }
-        return "ID";
-    }
-
-    public static void printLexeme(char lex[]) {
-        for (int i = 0; i < lex.length; i++) {
-            if (lex[i] != '\0') {
-                System.out.print(lex[i]);
-            } else {
-                System.out.print("\t\t|");
-                return;
-            }
-        }
-    }
-}
